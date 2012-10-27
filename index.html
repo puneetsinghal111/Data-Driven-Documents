@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" >
+    <head>
+	<title>NVD3 Example</title>
+	<script type="text/javascript" src="d3.v2.js"></script>
+	<script type="text/javascript" src="nv.d3.js"></script>
+	<link rel="stylesheet" href="nv.d3.css" type="text/css" />
+    </head>
+
+    <body>
+	<div id="chart" style="width:500px;">
+		<svg></svg>
+	</div>
+<script>
+nv.addGraph(function() {  
+   var chart = nv.models.lineChart();
+ 
+   chart.xAxis
+       .axisLabel('Time (ms)')
+       .tickFormat(d3.format(',r'));
+ 
+   chart.yAxis
+       .axisLabel('Voltage (v)')
+       .tickFormat(d3.format('.02f'));
+ 
+   d3.select('#chart svg')
+       .datum(sinAndCos())
+     .transition().duration(500)
+       .call(chart);
+ 
+   nv.utils.windowResize(function() { d3.select('#chart svg').call(chart) });
+ 
+   return chart;
+ });
+ 
+ 
+ 
+ 
+ /**************************************
+  * Simple test data generator
+  */
+ 
+ 
+ function sinAndCos() {
+   var sin = [],
+       cos = [];
+ 
+   for (var i = 0; i < 10; i++) {
+     sin.push({x: i, y: Math.sin(i/10)});
+     cos.push({x: i, y: .5 * Math.cos(i/10)});
+   }
+ 
+   return [
+     {
+       values: sin,
+       key: 'Sine Wave',
+       color: '#ff7f0e'
+     },
+     {
+       values: cos,
+       key: 'Cosine Wave',
+       color: '#2ca02c'
+     }
+   ];
+ }
+</script>
+	</body>
